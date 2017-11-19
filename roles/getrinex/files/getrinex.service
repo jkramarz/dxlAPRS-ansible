@@ -1,0 +1,10 @@
+[Unit]
+Description=RINEX downloader
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/getrinex.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=decoder.target

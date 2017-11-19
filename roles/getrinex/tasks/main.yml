@@ -1,0 +1,12 @@
+---
+- name: Install getrinex.sh
+  copy:
+    src: getrinex.sh
+    dest: /usr/local/bin/getrinex.sh
+    mode: '0755'
+
+- name: Configure getrinex service
+  copy:
+    src: getrinex.service
+    dest: /etc/systemd/system/
+  notify: reload systemd

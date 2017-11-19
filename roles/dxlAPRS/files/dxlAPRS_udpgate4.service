@@ -1,0 +1,12 @@
+ [Unit]
+ Description=UDP APRS gate
+
+ [Service]
+ Type=simple
+ ExecStart=/opt/dxlAPRS/src/udpgate4 -v -R 127.0.0.1:4011:4010 -s ${DXLAPRS_CALLSIGN}-15 -l 7:/var/log/aprs.log -t 14580
+
+ Restart=on-failure
+ EnvironmentFile=/etc/default/dxlAPRS
+
+ [Install]
+ WantedBy=decoder.target

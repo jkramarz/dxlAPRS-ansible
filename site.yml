@@ -1,0 +1,10 @@
+---
+
+# Raspbian Stretch Lite
+# https://downloads.raspberrypi.org/raspbian_lite_latest
+# Version:September 2017
+# Release date:2017-09-07
+- hosts: all
+  become: yes
+  roles:
+    - dxlAPRS

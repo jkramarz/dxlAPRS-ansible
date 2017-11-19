@@ -1,0 +1,13 @@
+ [Unit]
+ Description=multichannel decoder RS92, RS41, SRS-C34 DFM0x, M10 Radiosondes
+ After=dxlAPRS_sondeudp.service,getrinex.service
+ Requires=dxlAPRS_sondeudp.service,getrinex.service
+
+ [Service]
+ Type=simple
+ ExecStart=/opt/dxlAPRS/src/sondemod -v -x ${DXLAPRS_RINEX} -r 127.0.0.1:4010 -o 4000 -I ${DXLAPRS_CALLSIGN}-14 -R 30 -d -A 700 -B 2 -b 30 -p 0
+ Restart=on-failure
+ EnvironmentFile=/etc/default/dxlAPRS
+
+ [Install]
+ WantedBy=decoder.target

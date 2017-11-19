@@ -1,0 +1,48 @@
+---
+- name: Clone kalibrate-rtl
+  git:
+    repo: https://github.com/viraptor/kalibrate-rtl.git
+    dest: '{{ kalibrate_rtl_directory }}'
+    depth: 1
+
+- name: Install dependencies
+  apt:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - automake
+    - libtool
+    - libfftw3-dev
+    - librtlsdr-dev
+
+- name: Bootstrap compilation
+  command: ./bootstrap
+  args:
+    chdir: '{{ kalibrate_rtl_directory }}'
+    creates: '{{ kalibrate_rtl_directory }}/configure'
+
+- name: Configure compilation
+  command: ./configure
+  args:
+    chdir: '{{ kalibrate_rtl_directory }}'
+    creates: '{{ kalibrate_rtl_directory }}/Makefile'
+
+- name: Compile kalibrate-rtl
+  make:
+    chdir: '{{ kalibrate_rtl_directory }}'
+    target: '{{ item }}'
+  with_items:
+    - all
+    - install
+
+- name: Copy calibration script
+  copy:
+    src: calibrate.py
+    dest: /usr/local/bin/
+    mode: '0755'
+
+- name: Copy calibration unit file
+  copy:
+    src: rtl_calibrate.service
+    dest: /etc/systemd/system/
+  notify: reload systemd

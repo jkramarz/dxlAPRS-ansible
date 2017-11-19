@@ -1,0 +1,3 @@
+{% for frequency in dxlAPRS_FM_demodulator_frequencies %}
+f {{ frequency }} {{ dxlAPRS_AFC }} {{ dxlAPRS_squelch }} {{ dxlAPRS_lowpass }} {{ dxlAPRS_IF_width }}
+{% endfor %}

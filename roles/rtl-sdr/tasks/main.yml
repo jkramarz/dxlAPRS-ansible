@@ -1,0 +1,16 @@
+---
+- name: Install rtl-sdr
+  apt:
+    name: rtl-sdr
+    state: present
+
+- name: Configure module blacklist
+  copy:
+    src: blacklist-rtl.conf
+    dest: /etc/modprobe.d/
+
+- name: Configure rtl_tcp service
+  copy:
+    src: rtl_tcp.service
+    dest: /etc/systemd/system/
+  notify: reload systemd

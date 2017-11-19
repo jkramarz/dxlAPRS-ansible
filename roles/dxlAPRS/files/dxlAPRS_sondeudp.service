@@ -1,0 +1,13 @@
+ [Unit]
+ Description=RS92, RS41, C34, C50 Sonde Demodulator
+ After=dxlAPRS_sdrtst.service
+ Requires=dxlAPRS_sdrtst.service
+
+ [Service]
+ Type=simple
+ ExecStart=/opt/dxlAPRS/src/sondeudp -f 16000 -l 128 -c 0 -o $DXLAPRS_SOCKET -I ${DXLAPRS_CALLSIGN}-14 -v -u 127.0.0.1:4000
+ Restart=on-failure
+ EnvironmentFile=/etc/default/dxlAPRS
+
+ [Install]
+ WantedBy=decoder.target

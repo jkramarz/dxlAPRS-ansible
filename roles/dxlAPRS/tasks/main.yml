@@ -1,0 +1,44 @@
+---
+- name: Clone dxlAPRS
+  git:
+    repo: https://github.com/oe5hpm/dxlAPRS.git
+    dest: '{{ dxlAPRS_directory }}'
+    depth: 1
+
+- name: Install dependencies
+  apt:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - libjpeg-dev
+    - libx11-dev
+    - libxext-dev
+    - libpng-dev
+
+- name: Compile dxlAPRS
+  make:
+    chdir: '{{ dxlAPRS_directory }}/src'
+    target: '{{ item }}'
+  with_items: '{{ dxlAPRS_components }}'
+
+- name: Create configuration directory
+  file:
+    path: /etc/dxlAPRS
+    state: directory
+
+- name: Configure sdrtst
+  template:
+    src: sdrtst.j2
+    dest: /etc/dxlAPRS/sdrtst
+
+- name: Configure dxlAPRS
+  template:
+    src: dxlAPRS.j2
+    dest: /etc/default/dxlAPRS
+
+- name: Configure services
+  copy:
+    src: 'dxlAPRS_{{ item }}.service'
+    dest: /etc/systemd/system
+  with_items: '{{ dxlAPRS_components }}'
+  notify: reload systemd

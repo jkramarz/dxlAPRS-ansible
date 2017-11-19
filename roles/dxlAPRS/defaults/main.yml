@@ -1,0 +1,23 @@
+---
+dxlAPRS_directory: /opt/dxlAPRS
+
+dxlAPRS_components:
+  - sondeudp
+  - sondemod
+  - udpgate4
+  - sdrtst
+
+dxlAPRS_AFC: 15 #AFC-range in +-kHz
+
+dxlAPRS_FM_demodulator_frequencies:
+  # - '400.600' #Poprad
+  # - '401.000' #Wieden
+  # - '401.100' #Praha
+  - '402.100' #Prosciejow
+  - '403.000' #Wroclaw
+  - '403.010' #Budapest
+  - '403.730' #Senica
+
+dxlAPRS_squelch: 0
+dxlAPRS_lowpass: 15000
+dxlAPRS_IF_width: 12000

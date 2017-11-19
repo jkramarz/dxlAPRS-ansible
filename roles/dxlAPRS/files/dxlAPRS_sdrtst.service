@@ -1,0 +1,13 @@
+ [Unit]
+ Description=dxlAPRS demodulator
+ After=rtl_tcp.service
+ Requires=rtl_tcp.service
+
+ [Service]
+ Type=simple
+ ExecStart=/opt/dxlAPRS/src/sdrtst -c /etc/dxlAPRS/sdrtst  -s $DXLAPRS_SOCKET -v
+ Restart=on-failure
+ EnvironmentFile=/etc/default/dxlAPRS
+
+ [Install]
+ WantedBy=decoder.target

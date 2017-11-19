@@ -1,0 +1,13 @@
+[Unit]
+Description=rtl_tcp service
+After=rtl_calibrate.service
+Requires=rtl_calibrate.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/rtl_tcp -g 0 -d 0 -b 30 -P $PPM
+Restart=on-failure
+EnvironmentFile=/etc/default/rtl_tcp
+
+[Install]
+WantedBy=decoder.target

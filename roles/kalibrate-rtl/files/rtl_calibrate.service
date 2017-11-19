@@ -1,0 +1,10 @@
+[Unit]
+Description=rtl-sdr calibration using GSM
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/calibrate.py --config /etc/default/rtl_tcp
+RemainAfterExit=yes
+
+[Install]
+WantedBy=decoder.target
